@@ -1,7 +1,11 @@
 # Data Engineering POC - 1
-This is my repository to learn data engineering tools. I have access to Linode's Spark Cluster, Object Storage and PostgreSQL instance so I will be utilizing these resources to learn how to ingest data from CSV to an object storage and then to PostgreSQL.
+This is my repository to learn data engineering tools. I have access to Linode's Object Storage and PostgreSQL instance so I will be utilizing these resources to learn how to ingest data from CSV to an object storage and then to PostgreSQL.
+
+### Sample architecture diagram
+
 
 ```mermaid
+
 flowchart TD
     subgraph Source_Layer["Source Layer"]
         CSV["CSV Files"]
@@ -26,11 +30,15 @@ flowchart TD
         PostgreSQL[("PostgreSQL<br>Analytics / BI Tool Access")]
     end
 
-    CSV --> Spark
-    Spark --> BronzeStorage
-    BronzeStorage --> Spark
-    Spark --> SilverStorage
-    SilverStorage --> Spark
-    Spark --> GoldStorage
+    CSV --> DuckDB
+    DuckDB --> BronzeStorage
+    BronzeStorage --> DuckDB
+    DuckDB --> SilverStorage
+    SilverStorage --> DuckDB
+    DuckDB --> GoldStorage
     GoldStorage --> PostgreSQL
+
 ```
+
+### Data
+Data that I am using is the Online Retail dataset from [Kaggle](https://www.kaggle.com/datasets/lakshmi25npathi/online-retail-dataset?select=online_retail_II.xlsx).
